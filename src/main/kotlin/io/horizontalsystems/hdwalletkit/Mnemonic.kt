@@ -90,6 +90,26 @@ class Mnemonic {
         return PBKDF2SHA512.derive(pass, salt, PBKDF2_ROUNDS, 64)
     }
 
+        /**
+     * Convert mnemonic keys to seed
+     */
+    fun toSeedWithPassphrase(mnemonicKeys: List<String>, passphrase: String ): ByteArray {
+
+        validate(mnemonicKeys)
+
+        // To create binary seed from mnemonic, we use PBKDF2 function
+        // with mnemonic sentence (in UTF-8) used as a password and
+        // string "mnemonic" + passphrase (again in UTF-8) used as a
+        // salt. Iteration count is set to 2048 and HMAC-SHA512 is
+        // used as a pseudo-random function. Desired length of the
+        // derived key is 512 bits (= 64 bytes).
+        //
+        val pass = mnemonicKeys.joinToString(separator = " ")
+        //val salt = "mnemonic"
+
+        return PBKDF2SHA512.derive(pass, passphrase, PBKDF2_ROUNDS, 64)
+    }
+
 
     /**
      * Validate mnemonic keys

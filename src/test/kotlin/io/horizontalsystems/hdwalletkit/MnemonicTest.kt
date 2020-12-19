@@ -80,6 +80,18 @@ class MnemonicTest {
         Assert.assertArrayEquals(seed, expectedSeed)
     }
 
+    @Test
+    fun toSeedWithPassphrase_Success() {
+
+        val mnemonicKeys = listOf("jealous", "digital", "west", "actor", "thunder", "matter", "marble", "marine", "olympic", "range", "dust", "banner")
+
+        val seed = mnemonic.toSeedWithPassphrase(mnemonicKeys, "vergecurrency")
+
+        val expectedSeed = hexStringToByteArray("f5a3af66bdd85ba493887d8c89f93c0d6f339f2830e129cde381b4b027317532af2d50359794fb670fc4a0ee78ca577cd035631637dbc9194d6758a28382243d")
+
+        Assert.assertArrayEquals(seed, expectedSeed)
+    }
+
     @Test(expected = Mnemonic.InvalidMnemonicCountException::class)
     fun toSeed_WrongWordsCount() {
 
